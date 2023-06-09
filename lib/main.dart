@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_printer/Screens/LoginPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -41,10 +42,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   fit: BoxFit.cover)),
           child: Center(
               child: Padding(
-            padding: EdgeInsets.only(bottom: 20.0),
+            padding: const EdgeInsets.only(bottom: 20.0),
             child: ElevatedButton(
               onPressed: () {
                 print('Button Pressed');
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return LoginPage();
+                }));
               },
               child: Text('Get Started'),
               style: ElevatedButton.styleFrom(
