@@ -55,6 +55,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   primary: Color.fromARGB(255, 25, 95, 215)),
             ),
           ))),
+      // routes: {
+      //   "/": (context) => LoginPage(),
+      // }
     );
   }
 }

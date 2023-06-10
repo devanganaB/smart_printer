@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:smart_printer/Screens/SideMenu.dart';
+import 'package:smart_printer/Screens/dummy.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -22,20 +24,10 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text(
-          'Register Page',
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
       body: Container(
-        decoration: BoxDecoration(
-          color: Color(0xFFEBF0F4),
-        ),
+        decoration: const BoxDecoration(
+            gradient:
+                LinearGradient(colors: [Color(0xFFA0B5EB), Color(0xFFC9F0E4)])),
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -72,12 +64,19 @@ class _RegisterPageState extends State<RegisterPage> {
                     children: [
                       buildTextField('Name', nameController, Icons.person),
                       buildTextField('Email', emailController, Icons.email),
-                      buildTextField('Contact Number', contactController, Icons.phone),
-                      buildTextField('Branch', branchController, Icons.business),
-                      buildTextField('Division', divisionController, Icons.location_city),
-                      buildTextField('Library Card No', libraryCardController, Icons.credit_card),
-                      buildPasswordField('Password', passwordController, obscurePassword),
-                      buildPasswordField('Confirm Password', confirmPasswordController, obscureConfirmPassword, isConfirm: true),
+                      buildTextField(
+                          'Contact Number', contactController, Icons.phone),
+                      buildTextField(
+                          'Branch', branchController, Icons.business),
+                      buildTextField(
+                          'Division', divisionController, Icons.location_city),
+                      buildTextField('Library Card No', libraryCardController,
+                          Icons.credit_card),
+                      buildPasswordField(
+                          'Password', passwordController, obscurePassword),
+                      buildPasswordField('Confirm Password',
+                          confirmPasswordController, obscureConfirmPassword,
+                          isConfirm: true),
                       SizedBox(height: 8),
                       Text(
                         'Password must be at least 6 characters',
@@ -134,6 +133,11 @@ class _RegisterPageState extends State<RegisterPage> {
                       SizedBox(height: 8),
                       ElevatedButton(
                         onPressed: () {
+                          print('button pushed');
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return dummy();
+                          }));
                           // Handle sign-in button press
                         },
                         style: ElevatedButton.styleFrom(
@@ -159,7 +163,8 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  Widget buildTextField(String label, TextEditingController controller, IconData icon) {
+  Widget buildTextField(
+      String label, TextEditingController controller, IconData icon) {
     return Container(
       margin: EdgeInsets.only(top: 10),
       width: 264,
@@ -183,7 +188,9 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  Widget buildPasswordField(String label, TextEditingController controller, bool obscureText, {bool isConfirm = false}) {
+  Widget buildPasswordField(
+      String label, TextEditingController controller, bool obscureText,
+      {bool isConfirm = false}) {
     return Container(
       margin: EdgeInsets.only(top: 10),
       width: 264,
@@ -201,7 +208,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       obscureConfirmPassword = !obscureConfirmPassword;
                     });
                   },
-                  child: Icon(obscureConfirmPassword ? Icons.visibility_off : Icons.visibility),
+                  child: Icon(obscureConfirmPassword
+                      ? Icons.visibility_off
+                      : Icons.visibility),
                 )
               : GestureDetector(
                   onTap: () {
@@ -209,7 +218,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       obscurePassword = !obscurePassword;
                     });
                   },
-                  child: Icon(obscurePassword ? Icons.visibility_off : Icons.visibility),
+                  child: Icon(obscurePassword
+                      ? Icons.visibility_off
+                      : Icons.visibility),
                 ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.0),

@@ -154,7 +154,7 @@ class _LoginPageState extends State<LoginPage> {
                         Navigator.pop(context);
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return RegistrationPage();
+                          return RegisterPage();
                         }));
                       },
                       child: const Text(
