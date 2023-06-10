@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:smart_printer/Screens/LoginPage.dart';
-import 'package:smart_printer/Screens/SideMenu.dart';
-import 'package:smart_printer/Screens/dummy.dart';
 
 class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
+
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }
@@ -139,7 +139,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           Navigator.pop(context);
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                            return LoginPage();
+                            return const LoginPage();
                           }));
                           // Handle sign-in button press
                         },
@@ -204,7 +204,7 @@ class _RegisterPageState extends State<RegisterPage> {
         obscureText: obscureText,
         decoration: InputDecoration(
           labelText: label,
-          prefixIcon:const Icon(Icons.lock),
+          prefixIcon: const Icon(Icons.lock),
           suffixIcon: isConfirm
               ? GestureDetector(
                   onTap: () {
@@ -283,7 +283,7 @@ class _RegisterPageState extends State<RegisterPage> {
 }
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: RegisterPage(),
   ));
 }

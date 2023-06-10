@@ -28,32 +28,32 @@ class SideMenu extends StatelessWidget {
                   fit: BoxFit.cover)),
         ),
         ListTile(
-          leading: Icon(Icons.account_circle_outlined),
-          title: Text('View Profile'),
+          leading: const Icon(Icons.account_circle_outlined),
+          title: const Text('View Profile'),
           onTap: () {},
         ),
         ListTile(
-          leading: Icon(Icons.accessibility),
-          title: Text('About Us'),
+          leading: const Icon(Icons.accessibility),
+          title: const Text('About Us'),
           onTap: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => AboutUs()));
+                context, MaterialPageRoute(builder: (context) => const AboutUs()));
           },
         ),
         ListTile(
-          leading: Icon(Icons.call),
-          title: Text('Contact Us'),
+          leading: const Icon(Icons.call),
+          title: const Text('Contact Us'),
           onTap: () {},
         ),
         ListTile(
-          leading: Icon(Icons.help),
-          title: Text('Help'),
+          leading: const Icon(Icons.help),
+          title: const Text('Help'),
           onTap: () {},
         ),
-        Divider(),
+        const Divider(),
         ListTile(
-          leading: Icon(Icons.logout),
-          title: Text('Logout'),
+          leading: const Icon(Icons.logout),
+          title: const Text('Logout'),
           onTap: () {},
         )
       ],

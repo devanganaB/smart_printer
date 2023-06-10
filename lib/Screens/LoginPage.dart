@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_printer/Screens/RegistrationPage.dart';
-import 'package:smart_printer/Screens/dummy.dart';
+import 'package:smart_printer/Screens/HomePage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -83,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                       Navigator.pop(context);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return dummy();
+                        return const HomePage();
                       }));
                     },
                     style: ElevatedButton.styleFrom(
@@ -161,7 +161,7 @@ class _LoginPageState extends State<LoginPage> {
                         Navigator.pop(context);
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return RegisterPage();
+                          return const RegisterPage();
                         }));
                       },
                       child: const Text(

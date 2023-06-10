@@ -9,7 +9,7 @@ class AboutUs extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: const Color(0xFF5200FF),
       ),
-      body: Container(
+      body: SizedBox(
         height: MediaQuery.sizeOf(context).height,
         width: MediaQuery.sizeOf(context).width,
         child:  Column(

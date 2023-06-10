@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -52,13 +53,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 }));
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 25, 95, 215),
+                backgroundColor: Color.fromARGB(255, 25, 95, 215),
               ),
               child: const Text('Get Started'),
             ),
-          )
-        )
-      ),
+          ))),
     );
   }
 }
