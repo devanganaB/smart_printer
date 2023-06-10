@@ -45,19 +45,20 @@ class _MyHomePageState extends State<MyHomePage> {
             padding: const EdgeInsets.only(bottom: 20.0),
             child: ElevatedButton(
               onPressed: () {
-                print('Button Pressed');
+                // print('Button Pressed');
+                Navigator.pop(context);
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return LoginPage();
                 }));
               },
-              child: Text('Get Started'),
               style: ElevatedButton.styleFrom(
-                  primary: Color.fromARGB(255, 25, 95, 215)),
+                backgroundColor: const Color.fromARGB(255, 25, 95, 215),
+              ),
+              child: const Text('Get Started'),
             ),
-          ))),
-      // routes: {
-      //   "/": (context) => LoginPage(),
-      // }
+          )
+        )
+      ),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_printer/Screens/LoginPage.dart';
 import 'package:smart_printer/Screens/SideMenu.dart';
 import 'package:smart_printer/Screens/dummy.dart';
 
@@ -33,7 +34,7 @@ class _RegisterPageState extends State<RegisterPage> {
             padding: const EdgeInsets.all(16.0),
             child: ListView(
               children: [
-                Center(
+                const Center(
                   child: Text(
                     'Smart Printer',
                     style: TextStyle(
@@ -42,8 +43,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 8),
-                Row(
+                const SizedBox(height: 8),
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
@@ -56,7 +57,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Form(
                   key: _formKey,
                   child: Column(
@@ -77,8 +78,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       buildPasswordField('Confirm Password',
                           confirmPasswordController, obscureConfirmPassword,
                           isConfirm: true),
-                      SizedBox(height: 8),
-                      Text(
+                      const SizedBox(height: 8),
+                      const Text(
                         'Password must be at least 6 characters',
                         style: TextStyle(
                           fontSize: 12,
@@ -86,7 +87,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           color: Colors.black,
                         ),
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
@@ -110,19 +111,20 @@ class _RegisterPageState extends State<RegisterPage> {
                           }
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: Color(0xFF5200FF),
-                          onPrimary: Colors.white,
-                          textStyle: TextStyle(
+                          // primary: Color(0xFF5200FF),
+                          // onPrimary: Colors.white,
+                          backgroundColor: const Color(0xFF5200FF),
+                          textStyle: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
-                        child: Text('Create Your Smart Printer Account'),
+                        child: const Text('Create Your Smart Printer Account'),
                       ),
-                      SizedBox(height: 16),
-                      Text(
+                      const SizedBox(height: 16),
+                      const Text(
                         'Already have an account?',
                         style: TextStyle(
                           fontSize: 14,
@@ -130,27 +132,29 @@ class _RegisterPageState extends State<RegisterPage> {
                           color: Colors.black,
                         ),
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       ElevatedButton(
                         onPressed: () {
-                          print('button pushed');
+                          // print('button pushed');
+                          Navigator.pop(context);
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                            return dummy();
+                            return LoginPage();
                           }));
                           // Handle sign-in button press
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: Color(0xFF5200FF),
-                          onPrimary: Colors.white,
-                          textStyle: TextStyle(
+                          // primary: Color(0xFF5200FF),
+                          // onPrimary: Colors.white,
+                          backgroundColor: const Color(0xFF5200FF),
+                          textStyle: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
-                        child: Text('Sign-In Now'),
+                        child: const Text('Sign-In Now'),
                       ),
                     ],
                   ),
@@ -166,7 +170,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget buildTextField(
       String label, TextEditingController controller, IconData icon) {
     return Container(
-      margin: EdgeInsets.only(top: 10),
+      margin: const EdgeInsets.only(top: 10),
       width: 264,
       height: 56,
       child: TextFormField(
@@ -192,7 +196,7 @@ class _RegisterPageState extends State<RegisterPage> {
       String label, TextEditingController controller, bool obscureText,
       {bool isConfirm = false}) {
     return Container(
-      margin: EdgeInsets.only(top: 10),
+      margin: const EdgeInsets.only(top: 10),
       width: 264,
       height: 56,
       child: TextFormField(
@@ -200,7 +204,7 @@ class _RegisterPageState extends State<RegisterPage> {
         obscureText: obscureText,
         decoration: InputDecoration(
           labelText: label,
-          prefixIcon: Icon(Icons.lock),
+          prefixIcon:const Icon(Icons.lock),
           suffixIcon: isConfirm
               ? GestureDetector(
                   onTap: () {
@@ -257,14 +261,14 @@ class _RegisterPageState extends State<RegisterPage> {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('Registration Error'),
-          content: Text('Password and Confirm Password do not match.'),
+          title: const Text('Registration Error'),
+          content: const Text('Password and Confirm Password do not match.'),
           actions: [
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         ),

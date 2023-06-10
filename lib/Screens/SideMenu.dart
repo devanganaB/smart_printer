@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_printer/Screens/AboutUs.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({super.key});
@@ -9,7 +10,7 @@ class SideMenu extends StatelessWidget {
         child: ListView(
       padding: EdgeInsets.zero,
       children: [
-        UserAccountsDrawerHeader(
+        const UserAccountsDrawerHeader(
           accountName: Text('alexadamie'),
           accountEmail: Text('xyz@hotmail.com'),
           currentAccountPicture: CircleAvatar(
@@ -21,7 +22,7 @@ class SideMenu extends StatelessWidget {
                   color: Colors.pink,
                 ),
               )),
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
               image: DecorationImage(
                   image: AssetImage('assets/images/bg.png'),
                   fit: BoxFit.cover)),
@@ -34,7 +35,10 @@ class SideMenu extends StatelessWidget {
         ListTile(
           leading: Icon(Icons.accessibility),
           title: Text('About Us'),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => AboutUs()));
+          },
         ),
         ListTile(
           leading: Icon(Icons.call),

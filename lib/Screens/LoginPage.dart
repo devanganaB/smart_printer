@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_printer/Screens/RegistrationPage.dart';
+import 'package:smart_printer/Screens/dummy.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -78,7 +79,13 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   width: 200,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return dummy();
+                      }));
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF5200FF),
                     ),
