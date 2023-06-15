@@ -1,43 +1,59 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_printer/Screens/AboutUs.dart';
+import 'package:smart_printer/Screens/LoginPage.dart';
+import 'package:smart_printer/Screens/ViewProfile.dart';
 
 class SideMenu extends StatelessWidget {
-  const SideMenu({super.key});
+  SideMenu({super.key});
+  final user = FirebaseAuth.instance.currentUser!.email;
 
   @override
   Widget build(BuildContext context) {
+    CollectionReference users =
+        FirebaseFirestore.instance.collection('Users Details');
+
     return Drawer(
         child: ListView(
       padding: EdgeInsets.zero,
       children: [
-        const UserAccountsDrawerHeader(
-          accountName: Text('alexadamie'),
-          accountEmail: Text('xyz@hotmail.com'),
-          currentAccountPicture: CircleAvatar(
-              backgroundColor: Color.fromARGB(0, 0, 0, 0),
-              child: ClipOval(
-                child: Icon(
-                  Icons.account_circle,
-                  size: 78,
-                  color: Colors.pink,
-                ),
-              )),
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('assets/images/bg.png'),
-                  fit: BoxFit.cover)),
-        ),
+        FutureBuilder(
+            future: users.doc(user).get(),
+            builder: (context, snapshot) {
+              Map<String, dynamic> data =
+                  snapshot.data!.data() as Map<String, dynamic>;
+              return UserAccountsDrawerHeader(
+                accountName: Text(data['NAME:']),
+                accountEmail: Text(user!),
+                currentAccountPicture: CircleAvatar(
+                    backgroundColor: Color.fromARGB(0, 0, 0, 0),
+                    child: ClipOval(
+                      child: Icon(
+                        Icons.account_circle,
+                        size: 78,
+                        color: Colors.pink,
+                      ),
+                    )),
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('assets/images/bg.png'),
+                        fit: BoxFit.cover)),
+              );
+            }),
         ListTile(
           leading: const Icon(Icons.account_circle_outlined),
           title: const Text('View Profile'),
-          onTap: () {},
+          onTap: () {
+            ViewProfile();
+          },
         ),
         ListTile(
           leading: const Icon(Icons.accessibility),
           title: const Text('About Us'),
           onTap: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => const AboutUs()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const AboutUs()));
           },
         ),
         ListTile(
@@ -54,7 +70,13 @@ class SideMenu extends StatelessWidget {
         ListTile(
           leading: const Icon(Icons.logout),
           title: const Text('Logout'),
-          onTap: () {},
+          onTap: () {
+            FirebaseAuth.instance.signOut();
+            Navigator.pop(context);
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return const LoginPage();
+            }));
+          },
         )
       ],
     ));

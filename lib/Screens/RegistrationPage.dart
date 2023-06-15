@@ -1,4 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:smart_printer/Screens/HomePage.dart';
+//import 'package:smart_printer/Screens/HomePage.dart';
 import 'package:smart_printer/Screens/LoginPage.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -21,6 +26,53 @@ class _RegisterPageState extends State<RegisterPage> {
 
   bool obscurePassword = true;
   bool obscureConfirmPassword = true;
+
+  Future signup(String email, String password) async {
+    if (password != confirmPasswordController.text) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Registration Error'),
+          content: const Text('Password and Confirm Password do not match.'),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    } else {
+      try {
+        await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(email: email, password: password);
+
+        registerUser(
+            nameController.text.trim(),
+            contactController.text.trim(),
+            branchController.text.trim(),
+            divisionController.text.trim(),
+            libraryCardController.text.trim());
+        Navigator.pop(context);
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return const HomePage();
+        }));
+      } on FirebaseAuthException catch (e) {
+        Fluttertoast.showToast(
+            msg: 'Account is already created',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      }
+
+      return;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,23 +143,12 @@ class _RegisterPageState extends State<RegisterPage> {
                       ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            String name = nameController.text;
                             String email = emailController.text;
-                            String contact = contactController.text;
-                            String branch = branchController.text;
-                            String division = divisionController.text;
-                            String libraryCardNo = libraryCardController.text;
                             String password = passwordController.text;
 
-                            registerUser(
-                              name,
-                              email,
-                              contact,
-                              branch,
-                              division,
-                              libraryCardNo,
-                              password,
-                            );
+                            //registerUser(
+                            //  name, contact, branch, division, libraryCardNo);
+                            signup(email, password);
                           }
                         },
                         style: ElevatedButton.styleFrom(
@@ -248,37 +289,22 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void registerUser(
     String name,
-    String email,
     String contact,
     String branch,
     String division,
     String libraryCardNo,
-    String password,
-  ) {
+  ) async {
     // Perform registration logic here
-
-    if (password != confirmPasswordController.text) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Registration Error'),
-          content: const Text('Password and Confirm Password do not match.'),
-          actions: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('OK'),
-            ),
-          ],
-        ),
-      );
-      return;
-    }
-
-    // Perform further validation and registration process
-
-    // Placeholder code
+    var ref = FirebaseFirestore.instance
+        .collection('Users Details')
+        .doc(emailController.text);
+    ref.set({
+      'NAME': name,
+      'CONTACT': contact,
+      'BRANCH': branch,
+      'DIVISION': division,
+      'LIB-CARD_NO': libraryCardNo
+    });
   }
 }
 

@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_printer/Screens/RegistrationPage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smart_printer/Screens/HomePage.dart';
+import 'package:smart_printer/Screens/RegistrationPage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -10,6 +13,30 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  // final _formKey = GlobalKey<FormState>();
+  final _emailcontroller = new TextEditingController();
+  final _passwdcontroller = new TextEditingController();
+  Future signIn() async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _emailcontroller.text.trim(),
+          password: _passwdcontroller.text.trim());
+      Navigator.pop(context);
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return const HomePage();
+      }));
+    } on FirebaseAuthException catch (E) {
+      Fluttertoast.showToast(
+          msg: 'User does not exist',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,9 +74,11 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 20,
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(horizontal: 50),
                   child: TextField(
+                    controller: _emailcontroller,
+                    keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -61,9 +90,10 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 20,
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(horizontal: 50),
                   child: TextField(
+                    controller: _passwdcontroller,
                     obscureText: true,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
@@ -80,11 +110,13 @@ class _LoginPageState extends State<LoginPage> {
                   width: 200,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pop(context);
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return const HomePage();
-                      }));
+                      signIn();
+
+                      // Navigator.pop(context);
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: (context) {
+                      //   return const HomePage();
+                      // }));
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF5200FF),
