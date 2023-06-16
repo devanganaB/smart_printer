@@ -25,7 +25,8 @@ class SideMenu extends StatelessWidget {
                   snapshot.data!.data() as Map<String, dynamic>;
               return UserAccountsDrawerHeader(
                 accountName: Text(data['NAME']),
-                accountEmail: Text(user!),
+                // accountEmail: Text(user!),
+                accountEmail: Text(user != null ? user! : 'No Email'),
                 currentAccountPicture: const CircleAvatar(
                     backgroundColor: Color.fromARGB(0, 0, 0, 0),
                     child: ClipOval(
