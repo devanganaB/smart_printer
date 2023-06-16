@@ -3,7 +3,6 @@ import 'package:smart_printer/Screens/LoginPage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:smart_printer/Screens/auth/logged_in.dart';
 import 'firebase_options.dart';
-import 'dart:html';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
