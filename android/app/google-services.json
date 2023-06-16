@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "475916283796",
+    "project_id": "smart-printer-33ec0",
+    "storage_bucket": "smart-printer-33ec0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:475916283796:android:bcdf768de4cd54be87e981",
+        "android_client_info": {
+          "package_name": "com.example.smart_printer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "475916283796-gqoa8otcinfrhhbufgmfdlvpd33hidg7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgk_j2q-LRLWNVo-K2lnmtBjVnUDd8vAw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "475916283796-gqoa8otcinfrhhbufgmfdlvpd33hidg7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
