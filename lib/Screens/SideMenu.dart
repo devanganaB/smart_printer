@@ -24,9 +24,9 @@ class SideMenu extends StatelessWidget {
               Map<String, dynamic> data =
                   snapshot.data!.data() as Map<String, dynamic>;
               return UserAccountsDrawerHeader(
-                accountName: Text(data['NAME:']),
+                accountName: Text(data['NAME']),
                 accountEmail: Text(user!),
-                currentAccountPicture: CircleAvatar(
+                currentAccountPicture: const CircleAvatar(
                     backgroundColor: Color.fromARGB(0, 0, 0, 0),
                     child: ClipOval(
                       child: Icon(
@@ -35,7 +35,7 @@ class SideMenu extends StatelessWidget {
                         color: Colors.pink,
                       ),
                     )),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage('assets/images/bg.png'),
                         fit: BoxFit.cover)),
@@ -45,7 +45,8 @@ class SideMenu extends StatelessWidget {
           leading: const Icon(Icons.account_circle_outlined),
           title: const Text('View Profile'),
           onTap: () {
-            ViewProfile();
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ViewProfile()));
           },
         ),
         ListTile(
