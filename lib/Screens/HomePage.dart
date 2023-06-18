@@ -6,6 +6,7 @@ import 'package:smart_printer/Screens/SideMenu.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:path/path.dart' as path;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,6 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage> {
+  int numberOfCopies = 1;
   String sides = 'one-side';
   String orien = 'potrait';
 
@@ -46,25 +48,41 @@ class _HomePage extends State<HomePage> {
       // Prepare the URL for file transfer
       Uri url = Uri.parse('http://$pcIpAddress:3000/upload');
 
-      // Create a multipart request
-      var request = http.MultipartRequest('POST', url);
+      for (int i = 0; i < numberOfCopies; i++) {
+        print(numberOfCopies);
 
-      // Attach the selected file to the request
-      request.files
-          .add(await http.MultipartFile.fromPath('pdf', _selectedFile!.path));
+        String originalFileName = path.basename(_selectedFile!.path);
 
-      // Send the request
-      var response = await request.send();
+        // Generate a unique name (e.g., by appending a timestamp)
+        String uniqueFileName =
+            '${DateTime.now().millisecondsSinceEpoch}_$originalFileName';
 
-      // Check the response status
-      if (response.statusCode == 200) {
-        setState(() {
-          _status = 'File transferred successfully';
-        });
-      } else {
-        setState(() {
-          _status = 'Failed to transfer file';
-        });
+        // Get the directory for temporary storage
+        Directory tempDir = await getTemporaryDirectory();
+        String tempPath = path.join(tempDir.path, uniqueFileName);
+
+        // Copy or move the file to the temporary location with the unique name
+        await _selectedFile!.copy(tempPath);
+
+        // Create a multipart request
+        var request = http.MultipartRequest('POST', url);
+
+        // Attach the selected file to the request
+        request.files.add(await http.MultipartFile.fromPath('pdf', tempPath));
+
+        // Send the request
+        var response = await request.send();
+
+        // Check the response status
+        if (response.statusCode == 200) {
+          setState(() {
+            _status = 'File transferred successfully';
+          });
+        } else {
+          setState(() {
+            _status = 'Failed to transfer file';
+          });
+        }
       }
     } catch (e) {
       setState(() {
@@ -219,13 +237,20 @@ class _HomePage extends State<HomePage> {
                                           ),
                                           textAlign: TextAlign.center,
                                           cursorHeight: 15,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              numberOfCopies =
+                                                  int.tryParse(value) ?? 1;
+                                            });
+                                          },
                                           decoration: InputDecoration(
-                                              fillColor: Colors.amber,
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(
-                                                              20)))),
+                                            fillColor: Colors.amber,
+                                            border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(20),
+                                              ),
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ],
