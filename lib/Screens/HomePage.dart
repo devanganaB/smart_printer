@@ -74,6 +74,7 @@ class _HomePageState extends State<HomePage> {
 
           // Attach the selected file to the request
           request.files.add(await http.MultipartFile.fromPath('pdf', tempPath));
+          request.files.add(await http.MultipartFile.fromPath('txt', tempPath));
 
           // Send the request
           var response = await request.send();
