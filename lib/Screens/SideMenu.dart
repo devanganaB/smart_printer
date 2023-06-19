@@ -18,34 +18,63 @@ class SideMenu extends StatelessWidget {
         child: ListView(
       padding: EdgeInsets.zero,
       children: [
-        FutureBuilder(
-            future: users.doc(user).get(),
-            builder: (context, snapshot) {
-              Map<String, dynamic> data =
-                  snapshot.data!.data() as Map<String, dynamic>;
-              return UserAccountsDrawerHeader(
-                accountName: Text(data['NAME:']),
-                accountEmail: Text(user!),
-                currentAccountPicture: CircleAvatar(
-                    backgroundColor: Color.fromARGB(0, 0, 0, 0),
-                    child: ClipOval(
-                      child: Icon(
-                        Icons.account_circle,
-                        size: 78,
-                        color: Colors.pink,
-                      ),
-                    )),
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('assets/images/bg.png'),
-                        fit: BoxFit.cover)),
-              );
-            }),
+        StreamBuilder(
+        stream: users.doc(user).snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+          return UserAccountsDrawerHeader(
+            accountName: Text(data['NAME']),
+            // accountEmail: Text(user!),
+            accountEmail: Text(user != null ? user! : 'No Email'),
+            currentAccountPicture: const CircleAvatar(
+              backgroundColor: Color.fromARGB(0, 0, 0, 0),
+              child: ClipOval(
+                child: Icon(
+                  Icons.account_circle,
+                  size: 78,
+                  color: Colors.pink,
+                ),
+              ),
+            ),
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/bg.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          );
+        },
+      ),
+
+        // UserAccountsDrawerHeader(
+        //         accountName: Text('Raghav'),
+        //         // accountEmail: Text(user!),
+        //         accountEmail: Text(user != null ? user! : 'No Email'),
+        //         currentAccountPicture: const CircleAvatar(
+        //             backgroundColor: Color.fromARGB(0, 0, 0, 0),
+        //             child: ClipOval(
+        //               child: Icon(
+        //                 Icons.account_circle,
+        //                 size: 78,
+        //                 color: Colors.pink,
+        //               ),
+        //             )),
+        //         decoration: const BoxDecoration(
+        //             image: DecorationImage(
+        //                 image: AssetImage('assets/images/bg.png'),
+        //                 fit: BoxFit.cover)),
+        //       ),
+            
         ListTile(
           leading: const Icon(Icons.account_circle_outlined),
           title: const Text('View Profile'),
           onTap: () {
-            ViewProfile();
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ViewProfile()));
           },
         ),
         ListTile(

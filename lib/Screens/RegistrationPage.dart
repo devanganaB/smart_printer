@@ -44,6 +44,38 @@ class _RegisterPageState extends State<RegisterPage> {
           ],
         ),
       );
+    } else if (dropdownValueBranch == 'Branch') {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Registration Error'),
+          content: const Text('Please Select Your Branch'),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    } else if (dropdownValueDiv == 'Division') {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Registration Error'),
+          content: const Text('Please Select Your Division'),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
     } else {
       try {
         await FirebaseAuth.instance
@@ -52,8 +84,8 @@ class _RegisterPageState extends State<RegisterPage> {
         registerUser(
             nameController.text.trim(),
             contactController.text.trim(),
-            branchController.text.trim(),
-            divisionController.text.trim(),
+            dropdownValueBranch,
+            dropdownValueDiv,
             libraryCardController.text.trim());
         Navigator.pop(context);
         Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -74,6 +106,8 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
+  String dropdownValueBranch = 'Branch';
+  String dropdownValueDiv = 'Division';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,16 +149,101 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      buildTextField('Name', nameController, Icons.person),
-                      buildTextField('Email', emailController, Icons.email),
-                      buildTextField(
-                          'Contact Number', contactController, Icons.phone),
-                      buildTextField(
-                          'Branch', branchController, Icons.business),
-                      buildTextField(
-                          'Division', divisionController, Icons.location_city),
+                      buildTextField('Name', nameController, Icons.person,
+                          TextInputType.name),
+                      buildTextField('Email', emailController, Icons.email,
+                          TextInputType.emailAddress),
+                      buildTextField('Contact Number', contactController,
+                          Icons.phone, TextInputType.phone),
+                      // buildTextField(
+                      //     'Branch', branchController, Icons.business),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        height: 60,
+                        width: 450,
+                        child: DropdownButtonFormField(
+                          padding: EdgeInsets.symmetric(horizontal: 56),
+                          decoration: const InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8))),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8))),
+                            filled: true,
+                            fillColor: Colors.transparent,
+                          ),
+                          value: dropdownValueBranch,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              dropdownValueBranch = newValue!;
+                            });
+                          },
+                          items: <String>[
+                            'Branch',
+                            'AIDS',
+                            'CMPN',
+                            'INFT',
+                            'ETRX',
+                            'EXTC',
+                            'AURO',
+                            'INST',
+                            'MCA',
+                            'ME',
+                            'ECS'
+                          ].map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(
+                                value,
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        height: 60,
+                        width: 450,
+                        child: DropdownButtonFormField(
+                          padding: EdgeInsets.symmetric(horizontal: 56),
+                          decoration: const InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8))),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8))),
+                            filled: true,
+                            fillColor: Colors.transparent,
+                          ),
+                          value: dropdownValueDiv,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              dropdownValueDiv = newValue!;
+                            });
+                          },
+                          items: <String>['Division', 'A', 'B', 'C', 'D', 'E']
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(
+                                value,
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      // buildTextField(
+                      //     'Division', divisionController, Icons.location_city),
                       buildTextField('Library Card No', libraryCardController,
-                          Icons.credit_card),
+                          Icons.credit_card, TextInputType.number),
                       buildPasswordField(
                           'Password', passwordController, obscurePassword),
                       buildPasswordField('Confirm Password',
@@ -145,7 +264,6 @@ class _RegisterPageState extends State<RegisterPage> {
                           if (_formKey.currentState!.validate()) {
                             String email = emailController.text;
                             String password = passwordController.text;
-
                             //registerUser(
                             //  name, contact, branch, division, libraryCardNo);
                             signup(email, password);
@@ -208,13 +326,14 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  Widget buildTextField(
-      String label, TextEditingController controller, IconData icon) {
+  Widget buildTextField(String label, TextEditingController controller,
+      IconData icon, TextInputType keyboard) {
     return Container(
       margin: const EdgeInsets.only(top: 10),
       width: 264,
       height: 56,
       child: TextFormField(
+        keyboardType: keyboard,
         controller: controller,
         decoration: InputDecoration(
           labelText: label,
@@ -306,6 +425,10 @@ class _RegisterPageState extends State<RegisterPage> {
       'LIB-CARD_NO': libraryCardNo
     });
   }
+}
+
+Widget form() {
+  return Container();
 }
 
 void main() {
