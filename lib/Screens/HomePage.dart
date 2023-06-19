@@ -39,9 +39,9 @@ class _HomePage extends State<HomePage> {
 
     try {
       // Get the PC's IP address and the folder path
-      String pcIpAddress = '192.168.0.168'; // Replace with the PC's IP address
+      String pcIpAddress = '192.168.29.244'; // Replace with the PC's IP address
       String folderPath =
-          '/Users/dipanshughime/projects/pdfprinter/'; // Replace with the folder path on the PC
+          'C:/Users/johan/everthing/Desktop/test/testpdf/'; // Replace with the folder path on the PC
 
       // Prepare the URL for file transfer
       Uri url = Uri.parse('http://$pcIpAddress:3000/upload');
@@ -50,6 +50,7 @@ class _HomePage extends State<HomePage> {
       var request = http.MultipartRequest('POST', url);
 
       // Attach the selected file to the request
+
       request.files
           .add(await http.MultipartFile.fromPath('pdf', _selectedFile!.path));
 
