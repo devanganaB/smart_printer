@@ -155,9 +155,30 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    ElevatedButton(
-                      onPressed: _pickFiles,
-                      child: const Text('Choose Files'),
+                    Container(
+                      height: 80,
+                      width: 300,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Color.fromARGB(255, 26, 96, 217)),
+                        onPressed: _pickFiles,
+                        child: Row(
+                          children: [
+                            CircleAvatar(
+                              radius: 30,
+                              backgroundColor: Colors.white,
+                              child: Image.asset(
+                                  "assets/images/cloud-upload.gif",
+                                  height: 28),
+                            ),
+                            const Text("   UPLOAD DOCUMENT",
+                                style: TextStyle(
+                                    wordSpacing: 1,
+                                    fontFamily: 'Times New Roman',
+                                    fontSize: 18))
+                          ],
+                        ),
+                      ),
                     ),
                     if (_selectedFiles.isNotEmpty)
                       Column(
