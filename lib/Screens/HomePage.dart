@@ -49,9 +49,7 @@ class _HomePageState extends State<HomePage> {
 
     try {
       // Get the PC's IP address and the folder path
-      String pcIpAddress = '192.168.0.168'; // Replace with the PC's IP address
-      String folderPath =
-          '/Users/dipanshughime/projects/pdfprinter/'; // Replace with the folder path on the PC
+      String pcIpAddress = '172.24.240.1'; // Replace with the PC's IP address
 
       // Prepare the URL for file transfer
       Uri url = Uri.parse('http://$pcIpAddress:3000/upload');
@@ -99,7 +97,16 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  void _deleteFile(int index) async {
+    await _selectedFiles.remove(_selectedFiles[index]);
+    await _filePaths.remove(_filePaths[index]);
+    await _numberOfCopies.remove(_numberOfCopies[index]);
+  }
+
   Widget build(BuildContext context) {
+    print("selectedFiles : $_selectedFiles");
+    print("_filePaths : $_filePaths");
+    print("_numberOfCopies : $_numberOfCopies");
     return Scaffold(
       drawer: SideMenu(),
       appBar: AppBar(
@@ -155,6 +162,9 @@ class _HomePageState extends State<HomePage> {
                     if (_selectedFiles.isNotEmpty)
                       Column(
                         children: List.generate(_selectedFiles.length, (index) {
+                          String fileName =
+                              _selectedFiles[index].path.split('/').last;
+
                           return Column(
                             children: [
                               const SizedBox(height: 16),
@@ -164,17 +174,11 @@ class _HomePageState extends State<HomePage> {
                                   const SizedBox(width: 8),
                                   Expanded(
                                     child: Text(
-                                      'Selected File: ${_selectedFiles[index].path}',
+                                      '${fileName}',
                                       style: const TextStyle(fontSize: 16),
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
-                                ],
-                              ),
-                              const SizedBox(height: 16),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
                                   IconButton(
                                     onPressed: () {
                                       setState(() {
@@ -197,8 +201,16 @@ class _HomePageState extends State<HomePage> {
                                     },
                                     icon: const Icon(Icons.add),
                                   ),
+                                  IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          _deleteFile(index);
+                                        });
+                                      },
+                                      icon: Icon(Icons.delete))
                                 ],
                               ),
+                              const SizedBox(height: 16),
                             ],
                           );
                         }),
