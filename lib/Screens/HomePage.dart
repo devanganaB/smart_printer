@@ -95,12 +95,19 @@ class _HomePageState extends State<HomePage> {
         _status = 'Error: $e';
       });
     }
+    _emptyList();
   }
 
   void _deleteFile(int index) async {
     await _selectedFiles.remove(_selectedFiles[index]);
     await _filePaths.remove(_filePaths[index]);
     await _numberOfCopies.remove(_numberOfCopies[index]);
+  }
+
+  void _emptyList() {
+    _selectedFiles.clear();
+    _filePaths.clear();
+    _numberOfCopies.clear();
   }
 
   Widget build(BuildContext context) {
