@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:smart_printer/Screens/SideMenu.dart';
 import 'package:http/http.dart' as http;
