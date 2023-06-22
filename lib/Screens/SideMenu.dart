@@ -88,7 +88,12 @@ class SideMenu extends StatelessWidget {
         ListTile(
           leading: const Icon(Icons.call),
           title: const Text('Contact Us'),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ContactUs()),
+            );
+          },
         ),
         ListTile(
           leading: const Icon(Icons.help),
