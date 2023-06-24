@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "475916283796-gqoa8otcinfrhhbufgmfdlvpd33hidg7.apps.googleusercontent.com",
+          "client_id": "475916283796-96j8sfh5d1s63nnuuo4a9lnrg45gceqb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.smart_printer",
+            "certificate_hash": "78057d574179be4227cc6c5242c7821c9dfc980d"
+          }
+        },
+        {
+          "client_id": "475916283796-s4la3ov1crmkr85uq7da6o0gpnjjblnc.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -29,6 +37,13 @@
             {
               "client_id": "475916283796-gqoa8otcinfrhhbufgmfdlvpd33hidg7.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "475916283796-fheisqrqh9rvsm619bbdpnp03khjhi3b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.smartPrinter"
+              }
             }
           ]
         }
