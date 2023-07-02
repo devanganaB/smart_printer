@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
 
     try {
       // Get the PC's IP address and the folder path
-      String pcIpAddress = '172.24.240.1'; // Replace with the PC's IP address
+      String pcIpAddress = '192.168.0.168'; // Replace with the PC's IP address
 
       // Prepare the URL for file transfer
       Uri url = Uri.parse('http://$pcIpAddress:3000/upload');
