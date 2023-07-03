@@ -11,10 +11,10 @@ class LoggedIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StreamBuilder(
+      body: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
+          if (snapshot.hasData == FirebaseAuth.instance.currentUser) {
             return HomePage();
           } else {
             return LoginPage();
