@@ -1,7 +1,10 @@
+//import 'dart:html';
+
 import 'package:firebase_auth/firebase_auth.dart';
 //import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:smart_printer/Screens/HomePage.dart';
 import 'package:smart_printer/Screens/RegistrationPage.dart';
 
@@ -16,6 +19,10 @@ class _LoginPageState extends State<LoginPage> {
   // final _formKey = GlobalKey<FormState>();
   final _emailcontroller = new TextEditingController();
   final _passwdcontroller = new TextEditingController();
+  final googleSignIn = GoogleSignIn();
+  GoogleSignInAccount? _user;
+  GoogleSignInAccount get user => _user!;
+
   Future signIn() async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -35,6 +42,39 @@ class _LoginPageState extends State<LoginPage> {
           textColor: Colors.white,
           fontSize: 16.0);
     }
+  }
+
+  Future googleLogin() async {
+    final googleUser = await googleSignIn.signIn();
+    if (googleUser == null) return;
+    _user = googleUser;
+
+    final googleAuth = await googleUser.authentication;
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+    try {
+      await FirebaseAuth.instance.signInWithCredential(credential);
+      Navigator.pop(context);
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return const HomePage();
+      }));
+    } on FirebaseAuthException catch (E) {
+      Fluttertoast.showToast(
+          msg: 'User does not exist',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
+    // return const HomePage();
+  }
+
+  Future logout() async {
+    await googleSignIn.disconnect();
   }
 
   @override
@@ -146,7 +186,9 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         child: IconButton(
                           icon: Image.asset('assets/images/google.png'),
-                          onPressed: () {},
+                          onPressed: () {
+                            googleLogin();
+                          },
                         ),
                       ),
                     ),
