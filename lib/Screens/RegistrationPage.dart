@@ -418,7 +418,7 @@ class _RegisterPageState extends State<RegisterPage> {
         .collection('Users Details')
         .doc(emailController.text);
     ref.set({
-      'displayName': name,
+      'NAME': name,
       'CONTACT': contact,
       'BRANCH': branch,
       'DIVISION': division,
