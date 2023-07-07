@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:smart_printer/Screens/AboutUs.dart';
 import 'package:smart_printer/Screens/LoginPage.dart';
 import 'package:smart_printer/Screens/ViewProfile.dart';
+import 'package:smart_printer/Screens/ContactUs.dart';
+
 
 class SideMenu extends StatelessWidget {
   SideMenu({super.key});
@@ -88,7 +90,13 @@ class SideMenu extends StatelessWidget {
         ListTile(
           leading: const Icon(Icons.call),
           title: const Text('Contact Us'),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              // MaterialPageRoute(builder: (context) => ContactUs()),
+              MaterialPageRoute(builder: (context) => ContactUs(defaultEmail: user ?? '')),
+            );
+          },
         ),
         ListTile(
           leading: const Icon(Icons.help),
