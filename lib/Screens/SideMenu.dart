@@ -9,7 +9,6 @@ import 'package:smart_printer/Screens/LoginPage.dart';
 import 'package:smart_printer/Screens/ViewProfile.dart';
 import 'package:smart_printer/Screens/ContactUs.dart';
 
-
 class SideMenu extends StatelessWidget {
   SideMenu({super.key});
   final user = FirebaseAuth.instance.currentUser!;
@@ -98,7 +97,8 @@ class SideMenu extends StatelessWidget {
             Navigator.push(
               context,
               // MaterialPageRoute(builder: (context) => ContactUs()),
-              MaterialPageRoute(builder: (context) => ContactUs(defaultEmail: user ?? '')),
+              MaterialPageRoute(
+                  builder: (context) => ContactUs(defaultEmail: '')),
             );
           },
         ),
