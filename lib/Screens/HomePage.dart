@@ -1,11 +1,12 @@
 import 'dart:io';
-
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:smart_printer/Screens/SideMenu.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart' as path;
+import 'package:smart_printer/Screens/ViewProfile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -21,6 +22,7 @@ class _HomePageState extends State<HomePage> {
   String sides = 'one-side';
   String orien = 'portrait';
   String? _status;
+  num _numberOfPages = 0;
 
   Future<void> _pickFiles() async {
     FilePickerResult? result =
@@ -31,11 +33,35 @@ class _HomePageState extends State<HomePage> {
       List<String?> filePaths = result.paths.toList();
 
       List<int> numberOfCopies = List<int>.filled(files.length, 1);
+      String pcIpAddress = '172.24.240.1';
+      Uri url = Uri.parse('http://$pcIpAddress:3000/pages');
       setState(() {
         _selectedFiles = files;
         _filePaths = filePaths;
         _numberOfCopies = numberOfCopies;
       });
+      for (int i = 0; i < _selectedFiles.length; i++) {
+        try {
+          int numberOfPages = await countPages(_selectedFiles[i]);
+          print('Number of pages in the file: $numberOfPages');
+        } catch (e) {
+          print('Error: $e');
+        }
+      }
+
+      // print('for loop starting');
+      // try {
+      //   for (int i = 0; i < _selectedFiles.length; i++) {
+      //     var request = http.MultipartRequest('POST', url);
+      //     request.files
+      //         .add(await http.MultipartFile.fromPath('pdf', _filePaths[i]!));
+      //     var response = await request.send();
+      //   }
+      // } catch (e) {
+      //   print("error");
+      // }
+
+      // print('for loop ending');
     }
   }
 
@@ -49,7 +75,7 @@ class _HomePageState extends State<HomePage> {
 
     try {
       // Get the PC's IP address and the folder path
-      String pcIpAddress = '172.24.240.1'; // Replace with the PC's IP address
+      String pcIpAddress = '172.20.0.1'; // Replace with the PC's IP address
 
       // Prepare the URL for file transfer
       Uri url = Uri.parse('http://$pcIpAddress:3000/upload');
@@ -76,12 +102,17 @@ class _HomePageState extends State<HomePage> {
           request.files.add(await http.MultipartFile.fromPath('pdf', tempPath));
 
           // Send the request
-          var response = await request.send();
-
+          var streamedResponse = await request.send();
+          var response = await http.Response.fromStream(streamedResponse);
           // Check the response status
           if (response.statusCode == 200) {
             setState(() {
               _status = 'File transferred successfully';
+              final data = json.decode(response.body);
+              _numberOfPages += data['pages'];
+
+              print("this is pages");
+              print(_numberOfPages);
             });
           } else {
             setState(() {
@@ -96,6 +127,24 @@ class _HomePageState extends State<HomePage> {
       });
     }
     _emptyList();
+  }
+
+  Future<int> countPages(File file) async {
+    if (await file.exists()) {
+      List<String> list = file.readAsLinesSync();
+
+      int lineCount = list.length;
+      ;
+      // await file.openRead().transform(utf8.decoder).forEach((line) {
+      //   lineCount++;
+      // });
+
+      // Assuming an average of 50 lines per page, you can estimate the number of pages.
+      int pages = (lineCount / 50).ceil();
+      return pages;
+    } else {
+      throw FileSystemException('File not found');
+    }
   }
 
   void _deleteFile(int index) async {
@@ -142,6 +191,11 @@ class _HomePageState extends State<HomePage> {
                   fontWeight: FontWeight.bold,
                   fontFamily: 'Open Sans',
                 ),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                'number of pages used: $_numberOfPages',
+                style: TextStyle(fontSize: 20),
               ),
               const SizedBox(height: 20),
               Container(

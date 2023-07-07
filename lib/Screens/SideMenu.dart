@@ -7,6 +7,8 @@ import 'package:smart_printer/Screens/AboutUs.dart';
 import 'package:smart_printer/Screens/ContactUs.dart';
 import 'package:smart_printer/Screens/LoginPage.dart';
 import 'package:smart_printer/Screens/ViewProfile.dart';
+import 'package:smart_printer/Screens/ContactUs.dart';
+
 
 class SideMenu extends StatelessWidget {
   SideMenu({super.key});
@@ -95,7 +97,8 @@ class SideMenu extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ContactUs()),
+              // MaterialPageRoute(builder: (context) => ContactUs()),
+              MaterialPageRoute(builder: (context) => ContactUs(defaultEmail: user ?? '')),
             );
           },
         ),
