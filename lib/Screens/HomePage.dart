@@ -236,7 +236,7 @@ class _HomePageState extends State<HomePage> {
                                 style: TextStyle(
                                     wordSpacing: 1,
                                     fontFamily: 'Times New Roman',
-                                    fontSize: 18))
+                                    fontSize: 13))
                           ],
                         ),
                       ),
@@ -328,7 +328,7 @@ class _HomePageState extends State<HomePage> {
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),
                         ),
-                        const SizedBox(width: 10),
+                        const SizedBox(width: 3),
                         DropdownButton<String>(
                           value: sides,
                           onChanged: (String? newValue) {
@@ -358,7 +358,7 @@ class _HomePageState extends State<HomePage> {
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),
                         ),
-                        const SizedBox(width: 10),
+                        const SizedBox(width: 3),
                         DropdownButton<String>(
                           value: orien,
                           onChanged: (String? newValue) {
