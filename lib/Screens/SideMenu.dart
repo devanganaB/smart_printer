@@ -23,37 +23,37 @@ class SideMenu extends StatelessWidget {
       padding: EdgeInsets.zero,
       children: [
         StreamBuilder(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return const Center(child: CircularProgressIndicator());
-            }
+        stream: users.doc(user.email).snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-            // Map<String, dynamic> data =
-            //     snapshot.data!.data() as Map<String, dynamic>;
-            return UserAccountsDrawerHeader(
-              accountName: Text(user.displayName!),
-              // accountEmail: Text(user!),
-              accountEmail: Text(user.email!),
-              currentAccountPicture: const CircleAvatar(
-                backgroundColor: Color.fromARGB(0, 0, 0, 0),
-                child: ClipOval(
-                  child: Icon(
-                    Icons.account_circle,
-                    size: 78,
-                    color: Colors.pink,
-                  ),
+          Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+          return UserAccountsDrawerHeader(
+            accountName: Text(data['NAME']),
+            // accountEmail: Text(user!),
+            accountEmail: Text(user.email!),
+            currentAccountPicture: const CircleAvatar(
+              backgroundColor: Color.fromARGB(0, 0, 0, 0),
+              child: ClipOval(
+                child: Icon(
+                  Icons.account_circle,
+                  size: 78,
+                  color: Colors.black,
                 ),
               ),
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/bg.png'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            );
-          },
-        ),
+            ),
+            // decoration: const BoxDecoration(
+            //   image: DecorationImage(
+            //     image: AssetImage('assets/images/bg.png'),
+            //     fit: BoxFit.cover,
+            //   ),
+            // ),
+          );
+        },
+      ),
+
 
         // UserAccountsDrawerHeader(
         //         accountName: Text('Raghav'),
