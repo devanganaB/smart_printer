@@ -23,16 +23,16 @@ class SideMenu extends StatelessWidget {
       padding: EdgeInsets.zero,
       children: [
         StreamBuilder(
-          stream: FirebaseAuth.instance.authStateChanges(),
+          stream: users.doc(user.email).snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return const Center(child: CircularProgressIndicator());
             }
 
-            // Map<String, dynamic> data =
-            //     snapshot.data!.data() as Map<String, dynamic>;
+            Map<String, dynamic> data =
+                snapshot.data!.data() as Map<String, dynamic>;
             return UserAccountsDrawerHeader(
-              accountName: Text(user.displayName!),
+              accountName: Text(data['NAME']),
               // accountEmail: Text(user!),
               accountEmail: Text(user.email!),
               currentAccountPicture: const CircleAvatar(

@@ -1,7 +1,8 @@
 //import 'dart:html';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-//import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -48,6 +49,7 @@ class _LoginPageState extends State<LoginPage> {
     final googleUser = await googleSignIn.signIn();
     if (googleUser == null) return;
     _user = googleUser;
+    print(googleUser.email);
 
     final googleAuth = await googleUser.authentication;
     final credential = GoogleAuthProvider.credential(
@@ -56,19 +58,36 @@ class _LoginPageState extends State<LoginPage> {
     );
     try {
       await FirebaseAuth.instance.signInWithCredential(credential);
+
+      var ref = FirebaseFirestore.instance
+          .collection('Users Details')
+          .doc(googleUser.email);
+      print('Document ID: ${ref.id}');
+
+      await ref.set({
+        'NAME': "your name",
+        'CONTACT': "9090909069",
+        'BRANCH': "CMPN",
+        'DIVISION': "C",
+        'LIB-CARD_NO': "696969"
+      });
+      print('Document created successfully');
+
       Navigator.pop(context);
       Navigator.push(context, MaterialPageRoute(builder: (context) {
         return const HomePage();
       }));
-    } on FirebaseAuthException catch (E) {
+    } on FirebaseAuthException catch (e) {
+      print('FirebaseAuthException: ${e.message}');
       Fluttertoast.showToast(
-          msg: 'User does not exist',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+        msg: 'User does not exist',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
     }
     // return const HomePage();
   }

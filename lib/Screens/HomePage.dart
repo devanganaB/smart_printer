@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
 
     try {
       // Get the PC's IP address and the folder path
-      String pcIpAddress = '172.18.176.1'; // Replace with the PC's IP address
+      String pcIpAddress = '172.26.192.1'; // Replace with the PC's IP address
 
       // Prepare the URL for file transfer
       Uri url = Uri.parse('http://$pcIpAddress:3000/upload');
@@ -199,6 +199,7 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 20),
               Container(
+                width: MediaQuery.sizeOf(context).width * 0.8,
                 margin: const EdgeInsets.symmetric(horizontal: 40),
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -217,8 +218,8 @@ class _HomePageState extends State<HomePage> {
                     ),
                     const SizedBox(height: 10),
                     Container(
-                      height: 80,
-                      width: 300,
+                      height: MediaQuery.sizeOf(context).height * 0.1,
+                      width: MediaQuery.sizeOf(context).width * 0.7,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Color.fromARGB(255, 26, 96, 217)),
@@ -236,7 +237,7 @@ class _HomePageState extends State<HomePage> {
                                 style: TextStyle(
                                     wordSpacing: 1,
                                     fontFamily: 'Times New Roman',
-                                    fontSize: 17))
+                                    fontSize: 15))
                           ],
                         ),
                       ),
